@@ -109,56 +109,8 @@ class ControllerDeploymentDelegate extends LaunchConfigurationDelegate {
 				
 				NetIDE_server = serverplatform // to know if server_platform is ODL #AB
 
-				if (serverplatform == NetIDE.CONTROLLER_POX && clientplatform == NetIDE.CONTROLLER_RYU) {
-					var clientcontrollerpath = (configuration.attributes.get(
-						"controller_data_" + c.name + "_" + controllerplatform) as String).absolutePath
 
-					cmdline = getCommandLine("Ryu_backend", clientcontrollerpath, c)
-
-					var clientthread = new Thread() {
-						var File workingDir
-						var ArrayList<String> cmdline
-
-						def setParameters(File wd, ArrayList<String> cl) {
-							this.workingDir = wd
-							this.cmdline = cl
-						}
-
-						override run() {
-							super.run()
-							startProcess(cmdline, workingDir, location, monitor, launch, configuration, env)
-						}
-					}
-
-					clientthread.setParameters(workingDir, cmdline)
-					clientthread.start
-
-					cmdline = getCommandLine("POX_Shim", clientcontrollerpath, c)
-
-					var serverthread = new Thread() {
-						var File workingDir
-						var ArrayList<String> cmdline
-
-						def setParameters(File wd, ArrayList<String> cl) {
-							this.workingDir = wd
-							this.cmdline = cl
-						}
-
-						override run() {
-							super.run()
-							startProcess(cmdline, workingDir, location, monitor, launch, configuration, env)
-						}
-					}
-					
-					Thread.sleep(2000)
-					
-					serverthread.setParameters(workingDir, cmdline)
-					serverthread.start
-					
-					
-
-				}
-				else if (serverplatform == NetIDE.CONTROLLER_RYU && clientplatform == NetIDE.CONTROLLER_RYU) {
+				if (serverplatform == NetIDE.CONTROLLER_RYU && clientplatform == NetIDE.CONTROLLER_RYU) {
 					var clientcontrollerpath = (configuration.attributes.get(
 						"controller_data_" + c.name + "_" + controllerplatform) as String).absolutePath
 
@@ -208,354 +160,7 @@ class ControllerDeploymentDelegate extends LaunchConfigurationDelegate {
 					
 
 				}
-				else if (serverplatform == NetIDE.CONTROLLER_POX && clientplatform == NetIDE.CONTROLLER_PYRETIC) {
-					var clientcontrollerpath = (configuration.attributes.get(
-						"controller_data_" + c.name + "_" + controllerplatform) as String).absolutePath
 
-
-					cmdline = getCommandLine("Pyretic_backend", clientcontrollerpath, c)
-					
-					var clientthread = new Thread() {
-						var File workingDir
-						var ArrayList<String> cmdline
-
-						def setParameters(File wd, ArrayList<String> cl) {
-							this.workingDir = wd
-							this.cmdline = cl
-						}
-
-						override run() {
-							super.run()
-							startProcess(cmdline, workingDir, location, monitor, launch, configuration, env)
-						}
-					}
-					
-					clientthread.setParameters(workingDir, cmdline)
-					clientthread.start
-
-					cmdline = getCommandLine("POX_Shim", clientcontrollerpath, c)
-
-					var serverthread = new Thread() {
-						var File workingDir
-						var ArrayList<String> cmdline
-
-						def setParameters(File wd, ArrayList<String> cl) {
-							this.workingDir = wd
-							this.cmdline = cl
-						}
-
-						override run() {
-							super.run()
-							startProcess(cmdline, workingDir, location, monitor, launch, configuration, env)
-						}
-					}
-
-					Thread.sleep(2000)
-
-					serverthread.setParameters(workingDir, cmdline)
-					serverthread.start
-
-				}
-				else if (serverplatform == NetIDE.CONTROLLER_RYU && clientplatform == NetIDE.CONTROLLER_PYRETIC) {
-					var clientcontrollerpath = (configuration.attributes.get(
-						"controller_data_" + c.name + "_" + controllerplatform) as String).absolutePath
-
-
-					cmdline = getCommandLine("Pyretic_backend", clientcontrollerpath, c)
-					
-					var clientthread = new Thread() {
-						var File workingDir
-						var ArrayList<String> cmdline
-
-						def setParameters(File wd, ArrayList<String> cl) {
-							this.workingDir = wd
-							this.cmdline = cl
-						}
-
-						override run() {
-							super.run()
-							startProcess(cmdline, workingDir, location, monitor, launch, configuration, env)
-						}
-					}
-					
-					clientthread.setParameters(workingDir, cmdline)
-					clientthread.start
-
-					cmdline = getCommandLine("Ryu_Shim", clientcontrollerpath, c)
-
-					var serverthread = new Thread() {
-						var File workingDir
-						var ArrayList<String> cmdline
-
-						def setParameters(File wd, ArrayList<String> cl) {
-							this.workingDir = wd
-							this.cmdline = cl
-						}
-
-						override run() {
-							super.run()
-							startProcess(cmdline, workingDir, location, monitor, launch, configuration, env)
-						}
-					}
-					
-					Thread.sleep(2000)
-					
-					serverthread.setParameters(workingDir, cmdline)
-					serverthread.start
-					
-					
-
-				}
-				else if (serverplatform == NetIDE.CONTROLLER_ODL && clientplatform == NetIDE.CONTROLLER_RYU) {
-					var clientcontrollerpath = (configuration.attributes.get(
-						"controller_data_" + c.name + "_" + controllerplatform) as String).absolutePath
-
-
-					cmdline = getCommandLine("Ryu_backend", clientcontrollerpath, c)
-					
-					var clientthread = new Thread() {
-						var File workingDir
-						var ArrayList<String> cmdline
-
-						def setParameters(File wd, ArrayList<String> cl) {
-							this.workingDir = wd
-							this.cmdline = cl
-						}
-
-						override run() {
-							super.run()
-							startProcess(cmdline, workingDir, location, monitor, launch, configuration, env)
-						}
-					}
-					
-					clientthread.setParameters(workingDir, cmdline)
-					clientthread.start
-
-					cmdline = getCommandLine("ODL_Shim", clientcontrollerpath, c)
-
-					var serverthread = new Thread() {
-						var File workingDir
-						var ArrayList<String> cmdline
-
-						def setParameters(File wd, ArrayList<String> cl) {
-							this.workingDir = wd
-							this.cmdline = cl
-						}
-
-						override run() {
-							super.run()
-							startProcess(cmdline, workingDir, location, monitor, launch, configuration, env)
-						}
-					}
-					
-					Thread.sleep(2000)
-					
-					serverthread.setParameters(workingDir, cmdline)
-					serverthread.start
-					
-					
-
-				}
-				else if (serverplatform == NetIDE.CONTROLLER_ODL && clientplatform == NetIDE.CONTROLLER_PYRETIC) {
-					var clientcontrollerpath = (configuration.attributes.get(
-						"controller_data_" + c.name + "_" + controllerplatform) as String).absolutePath
-
-
-					cmdline = getCommandLine("Pyretic_backend", clientcontrollerpath, c)
-					
-					var clientthread = new Thread() {
-						var File workingDir
-						var ArrayList<String> cmdline
-
-						def setParameters(File wd, ArrayList<String> cl) {
-							this.workingDir = wd
-							this.cmdline = cl
-						}
-
-						override run() {
-							super.run()
-							startProcess(cmdline, workingDir, location, monitor, launch, configuration, env)
-						}
-					}
-					
-					clientthread.setParameters(workingDir, cmdline)
-					clientthread.start
-
-					cmdline = getCommandLine("ODL_Shim", clientcontrollerpath, c)
-
-					var serverthread = new Thread() {
-						var File workingDir
-						var ArrayList<String> cmdline
-
-						def setParameters(File wd, ArrayList<String> cl) {
-							this.workingDir = wd
-							this.cmdline = cl
-						}
-
-						override run() {
-							super.run()
-							startProcess(cmdline, workingDir, location, monitor, launch, configuration, env)
-						}
-					}
-					
-					Thread.sleep(2000)
-					
-					serverthread.setParameters(workingDir, cmdline)
-					serverthread.start
-					
-					
-
-				}
-				else if (serverplatform == NetIDE.CONTROLLER_POX && clientplatform == NetIDE.CONTROLLER_FLOODLIGHT) {
-					var clientcontrollerpath = (configuration.attributes.get(
-						"controller_data_" + c.name + "_" + controllerplatform) as String).absolutePath
-
-
-					cmdline = getCommandLine("Floodlight_backend", clientcontrollerpath, c)
-					
-					var clientthread = new Thread() {
-						var File workingDir
-						var ArrayList<String> cmdline
-
-						def setParameters(File wd, ArrayList<String> cl) {
-							this.workingDir = wd
-							this.cmdline = cl
-						}
-
-						override run() {
-							super.run()
-							startProcess(cmdline, workingDir, location, monitor, launch, configuration, env)
-						}
-					}
-					
-					clientthread.setParameters(workingDir, cmdline)
-					clientthread.start
-
-					cmdline = getCommandLine("POX_Shim", clientcontrollerpath, c)
-
-					var serverthread = new Thread() {
-						var File workingDir
-						var ArrayList<String> cmdline
-
-						def setParameters(File wd, ArrayList<String> cl) {
-							this.workingDir = wd
-							this.cmdline = cl
-						}
-
-						override run() {
-							super.run()
-							startProcess(cmdline, workingDir, location, monitor, launch, configuration, env)
-						}
-					}
-					
-					Thread.sleep(2000)
-					
-					serverthread.setParameters(workingDir, cmdline)
-					serverthread.start
-					
-					
-
-				}
-				else if (serverplatform == NetIDE.CONTROLLER_RYU && clientplatform == NetIDE.CONTROLLER_FLOODLIGHT) {
-					var clientcontrollerpath = (configuration.attributes.get(
-						"controller_data_" + c.name + "_" + controllerplatform) as String).absolutePath
-
-
-					cmdline = getCommandLine("Floodlight_backend", clientcontrollerpath, c)
-					
-					var clientthread = new Thread() {
-						var File workingDir
-						var ArrayList<String> cmdline
-
-						def setParameters(File wd, ArrayList<String> cl) {
-							this.workingDir = wd
-							this.cmdline = cl
-						}
-
-						override run() {
-							super.run()
-							startProcess(cmdline, workingDir, location, monitor, launch, configuration, env)
-						}
-					}
-					
-					clientthread.setParameters(workingDir, cmdline)
-					clientthread.start
-
-					cmdline = getCommandLine("Ryu_Shim", clientcontrollerpath, c)
-
-					var serverthread = new Thread() {
-						var File workingDir
-						var ArrayList<String> cmdline
-
-						def setParameters(File wd, ArrayList<String> cl) {
-							this.workingDir = wd
-							this.cmdline = cl
-						}
-
-						override run() {
-							super.run()
-							startProcess(cmdline, workingDir, location, monitor, launch, configuration, env)
-						}
-					}
-					
-					Thread.sleep(2000)
-					
-					serverthread.setParameters(workingDir, cmdline)
-					serverthread.start
-					
-					
-
-				}
-				else if (serverplatform == NetIDE.CONTROLLER_ODL && clientplatform == NetIDE.CONTROLLER_FLOODLIGHT) {
-					var clientcontrollerpath = (configuration.attributes.get(
-						"controller_data_" + c.name + "_" + controllerplatform) as String).absolutePath
-
-
-					cmdline = getCommandLine("Floodlight_backend", clientcontrollerpath, c)
-					
-					var clientthread = new Thread() {
-						var File workingDir
-						var ArrayList<String> cmdline
-
-						def setParameters(File wd, ArrayList<String> cl) {
-							this.workingDir = wd
-							this.cmdline = cl
-						}
-
-						override run() {
-							super.run()
-							startProcess(cmdline, workingDir, location, monitor, launch, configuration, env)
-						}
-					}
-					
-					clientthread.setParameters(workingDir, cmdline)
-					clientthread.start
-
-					cmdline = getCommandLine("ODL_Shim", clientcontrollerpath, c)
-
-					var serverthread = new Thread() {
-						var File workingDir
-						var ArrayList<String> cmdline
-
-						def setParameters(File wd, ArrayList<String> cl) {
-							this.workingDir = wd
-							this.cmdline = cl
-						}
-
-						override run() {
-							super.run()
-							startProcess(cmdline, workingDir, location, monitor, launch, configuration, env)
-						}
-					}
-					
-					Thread.sleep(2000)
-					
-					serverthread.setParameters(workingDir, cmdline)
-					serverthread.start
-					
-					
-
-				}
 			} else {
 
 				var controllerpath = (configuration.attributes.get(
@@ -586,7 +191,7 @@ class ControllerDeploymentDelegate extends LaunchConfigurationDelegate {
 
 		}
 
-		cmdline = newArrayList(location.toOSString, "ssh", "-c", "sudo python ~/Tools/debugger/Ryu_shim/debugger.py")
+		cmdline = newArrayList(location.toOSString, "ssh", "-c", "sudo ./karaf/assemblies/apache-karaf/target/bin/karaf") //TODO
 		var serverthread = new Thread() {
 			var File workingDir
 			var ArrayList<String> cmdline
@@ -607,12 +212,31 @@ class ControllerDeploymentDelegate extends LaunchConfigurationDelegate {
 		serverthread.setParameters(workingDir, cmdline)
 		serverthread.start
 		
-		if (NetIDE_server == NetIDE.CONTROLLER_ODL){
-			Thread.sleep(90000)
+		Thread.sleep(20000)
+		
+		cmdline = newArrayList(location.toOSString, "ssh", "-c", "sudo java -jar home/vagrant/composition/emulator-1.0-jar-with-dependencies.jar") //TODO
+		var serverthread2 = new Thread() {
+			var File workingDir
+			var ArrayList<String> cmdline
+
+			def setParameters(File wd, ArrayList<String> cl) {
+				this.workingDir = wd
+				this.cmdline = cl
+			}
+
+			override run() {
+				super.run()
+				startProcess(cmdline, workingDir, location, monitor, launch, configuration, env)
+				}
 		}
-		else{
-			Thread.sleep(2000)	
-		}
+					
+		Thread.sleep(2000)
+					
+		serverthread2.setParameters(workingDir, cmdline)
+		serverthread2.start
+		
+		Thread.sleep(90000)	
+
 		
 		cmdline = newArrayList(location.toOSString, "ssh", "-c",
 			"sudo python ~/mn-configs/" +
@@ -639,22 +263,11 @@ class ControllerDeploymentDelegate extends LaunchConfigurationDelegate {
 			case "Pyretic":
 				String.format("PYTHONPATH=$PYTHONPATH:controllers/%s:$HOME/pyretic:$HOME/pox $HOME/pyretic/pyretic.py %s",
 					path.removeFileExtension.lastSegment, path.removeFileExtension.lastSegment)
-			case "POX_Shim":
-				String.format("PYTHONPATH=$PYTHONPATH:Engine/ryu-backend/tests pox/pox.py openflow.of_01 --port=%s pox_client", c.portNo)
-				//String.format("PYTHONPATH=$PYTHONPATH:Engine/ryu-backend/tests pox/pox.py pox_client") AB
 			case "Ryu_Shim":
-				String.format("PYTHONPATH=$PYTHONPATH:Engine/ryu-shim sudo ryu-manager --ofp-tcp-listen-port=%s Engine/ryu-shim/ryu_shim.py", c.portNo)
+				String.format("PYTHONPATH=$PYTHONPATH:Engine/ryu-shim sudo ryu-manager --ofp-tcp-listen-port=%s Engine/ryu-shim/ryu-shim.py", c.portNo) //TODO
 			case "Ryu_backend":
 				String.format(
-					"PYTHONPATH=$PYTHONPATH:Engine/ryu-backend sudo ryu-manager --ofp-tcp-listen-port 7733 Engine/ryu-backend/backend.py controllers/%s/%s",path.removeFileExtension.lastSegment, path.lastSegment)
-					//"PYTHONPATH=$PYTHONPATH:Engine/ryu-backend sudo ryu-manager --ofp-tcp-listen-port 7733 Engine/ryu-backend/backend.py Engine/ryu-backend/tests/%s", 
-					//path.removeFileExtension.lastSegment) AB
-			case "Pyretic_backend":
-				String.format("PYTHONPATH=$PYTHONPATH:pyretic pyretic/pyretic.py -v high -f -m i pyretic.modules.%s",path.removeFileExtension.lastSegment)
-			case "ODL_Shim":
-				String.format("./openflowplugin/distribution/karaf/target/assembly/bin/karaf")
-			case "Floodlight_backend":
-				String.format("java -jar $HOME/floodlight/target/floodlight.jar")
+					"PYTHONPATH=$PYTHONPATH:Engine/ryu-backend sudo ryu-manager --ofp-tcp-listen-port 7733 Engine/ryu-backend/ryu-backend.py controllers/%s/%s",path.removeFileExtension.lastSegment, path.lastSegment) //TODO
 			default:
 				"echo No valid platform specified"
 		}

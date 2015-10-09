@@ -51,17 +51,8 @@ class VagrantfileGenerator {
 		url = bundle.getEntry("scripts/install_pox.sh")
 		var poxscriptpath = scriptpath(url)
 		
-		url = bundle.getEntry("scripts/install_odl.sh")
-		var odlscriptpath = scriptpath(url)
-		
-		url = bundle.getEntry("scripts/install_engine.sh")
-		var netideenginescriptpath = scriptpath(url)
-		
-		url = bundle.getEntry("scripts/install_logger_debugger.sh")
-		var logger_debuggerscriptpath = scriptpath(url)
-		
-		url = bundle.getEntry("scripts/install_floodlight.sh")
-		var floodlightscriptpath = scriptpath(url)
+		url = bundle.getEntry("scripts/install_core.sh")
+		var corescriptpath = scriptpath(url)
 
 		var controllerPlatformKeys = input.allContents.filter(typeof(Controller)).map[c|
 			String.format("controller_platform_%s", c.name)]
@@ -159,13 +150,8 @@ class VagrantfileGenerator {
 				«ENDIF»
 				config.vm.provision "shell", path: "«mininetscriptpath»", privileged: false
 				«IF requiredPlatforms.contains(NetIDE.CONTROLLER_ENGINE)»
-					config.vm.provision "shell", path: "«netideenginescriptpath»", privileged: false
+					config.vm.provision "shell", path: "«corescriptpath»", privileged: false
 					config.vm.provision "shell", path: "«ryuscriptpath»", privileged: false
-					config.vm.provision "shell", path: "«pyreticscriptpath»", privileged: false
-					config.vm.provision "shell", path: "«poxscriptpath»", privileged: false
-					config.vm.provision "shell", path: "«odlscriptpath»", privileged: false
-					config.vm.provision "shell", path: "«floodlightscriptpath»", privileged: false
-					config.vm.provision "shell", path: "«logger_debuggerscriptpath»", privileged: false
 				«ENDIF»
 				«IF requiredPlatforms.contains("Ryu")»
 					config.vm.provision "shell", path: "«ryuscriptpath»", privileged: false
@@ -176,12 +162,6 @@ class VagrantfileGenerator {
 				«IF requiredPlatforms.contains("POX")»
 					config.vm.provision "shell", path: "«poxscriptpath»", privileged: false
 				«ENDIF»
-				«IF requiredPlatforms.contains("OpenDaylight")»
-					config.vm.provision "shell", path: "«odlscriptpath»", privileged: false
-				«ENDIF»
-				«IF requiredPlatforms.contains("Floodlight")»
-					config.vm.provision "shell", path: "«floodlightscriptpath»", privileged: false
-				«ENDIF»
 				«ENDIF»
 				
 				# Syncing the mininet configuration folder with the vm
@@ -189,6 +169,9 @@ class VagrantfileGenerator {
 
 				# Syncing the debugger results folder with the vm
 				config.vm.synced_folder "«res.project.location»/results", "/home/vagrant/debug_results"
+				
+				# Syncing the composition folder with the vm
+				config.vm.synced_folder "«res.project.location»/composition", "/home/vagrant/composition"
 				
 				# Syncing controller paths with the vm
 				«FOR p : appPaths»
