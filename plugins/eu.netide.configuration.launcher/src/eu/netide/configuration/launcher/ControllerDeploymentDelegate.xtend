@@ -191,7 +191,7 @@ class ControllerDeploymentDelegate extends LaunchConfigurationDelegate {
 
 		}
 
-		cmdline = newArrayList(location.toOSString, "ssh", "-c", "sudo ./karaf/assemblies/apache-karaf/target/bin/karaf") //TODO
+		cmdline = newArrayList(location.toOSString, "ssh", "-c", "sudo /home/vagrant/karaf/assemblies/apache-karaf/target/apache-karaf/bin/karaf") //TODO
 		var serverthread = new Thread() {
 			var File workingDir
 			var ArrayList<String> cmdline
@@ -214,7 +214,7 @@ class ControllerDeploymentDelegate extends LaunchConfigurationDelegate {
 		
 		Thread.sleep(20000)
 		
-		cmdline = newArrayList(location.toOSString, "ssh", "-c", "sudo java -jar home/vagrant/composition/emulator-1.0-jar-with-dependencies.jar") //TODO
+		cmdline = newArrayList(location.toOSString, "ssh", "-c", "sudo java -jar /home/vagrant/composition/emulator-1.0-jar-with-dependencies.jar") //TODO
 		var serverthread2 = new Thread() {
 			var File workingDir
 			var ArrayList<String> cmdline

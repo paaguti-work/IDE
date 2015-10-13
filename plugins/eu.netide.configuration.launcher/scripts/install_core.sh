@@ -4,7 +4,8 @@ if [ ! -d ~/core_engine ]; then
   sudo apt-get --yes update
   sudo apt-get --yes install maven
   sudo add-apt-repository --yes ppa:webupd8team/java
-#  sudo apt-get --yes update
+  sudo apt-get --yes update
+  echo oracle-java8-installer shared/accepted-oracle-license-v1-1 select true | sudo debconf-set-selections
   sudo apt-get --yes install oracle-java8-installer
   sudo apt-get --yes install oracle-java8-set-default
   
@@ -30,6 +31,7 @@ if [ ! -d ~/core_engine ]; then
   mvn clean install -DskipTests
   cd assemblies/apache-karaf/target
   tar xvf apache-karaf-3.0.6-SNAPSHOT.tar.gz
+  mv apache-karaf-3.0.6-SNAPSHOT apache-karaf
 # cd apache-karaf-3.0.6-SNAPSHOT/bin
   
   

@@ -55,6 +55,10 @@ class NewNetIDEProjectWizardPage1 extends WizardPage {
 		return nametext.text
 	}
 	
+	def getComposition() {
+		true
+	}
+	
 	def getSysreq() {
 //		return sysreqcheck.selection
 		false
